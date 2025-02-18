@@ -26,15 +26,11 @@ def get_all_symbols(type):
     response = urllib.request.urlopen("https://api.binance.com/api/v3/exchangeInfo").read()
   return list(map(lambda symbol: symbol['symbol'], json.loads(response)['symbols']))
 
-def download_file(base_path, file_name, date_range=None, folder=None):
+def download_file(base_path, file_name, folder=None):
   download_path = "{}{}".format(base_path, file_name)
   if folder:
     base_path = os.path.join(folder, base_path)
-  if date_range:
-    date_range = date_range.replace(" ","_")
-    base_path = os.path.join(base_path, date_range)
   save_path = get_destination_dir(os.path.join(base_path, file_name), folder)
-  
 
   if os.path.exists(save_path):
     print("\nfile already exists! {}".format(save_path))
